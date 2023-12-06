@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "BLOB_STORAGE_CONNECTION_STRING": "",
+    "COSMO_DB_KEY": "",
+    "COSMO_DB_ENDPOINT": "",
+    "COMPUTER_VISION_KEY": "",
+    "COMPUTER_VISION_ENDPOINT": ""
+  }
+}

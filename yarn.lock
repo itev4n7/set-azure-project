@@ -9,14 +9,6 @@
   dependencies:
     tslib "^2.2.0"
 
-"@azure/cognitiveservices-computervision@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.npmjs.org/@azure/cognitiveservices-computervision/-/cognitiveservices-computervision-8.2.0.tgz"
-  integrity sha512-wcl9vbZrenrMStRvSCY6cA2ZkRoQpDwJNLOnRtQyNJKZ4uNrfpDfBTp+fPS+BdPn7PHA+kMckvXTABqU8OoS/w==
-  dependencies:
-    "@azure/ms-rest-js" "^2.0.4"
-    tslib "^1.10.0"
-
 "@azure/core-amqp@^4.1.0":
   version "4.1.0"
   resolved "https://registry.npmjs.org/@azure/core-amqp/-/core-amqp-4.1.0.tgz"
@@ -172,15 +164,6 @@
   integrity sha512-ustrPY8MryhloQj7OWGe+HrYx+aoiOxzbXTtgblbV3xwCqpzUK36phH3XNHQKj3EPonyFUuDTfR3qFhTEAuZEg==
   dependencies:
     tslib "^2.2.0"
-
-"@azure/ms-rest-azure-js@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/@azure/ms-rest-azure-js/-/ms-rest-azure-js-2.1.0.tgz"
-  integrity sha512-CjZjB8apvXl5h97Ck6SbeeCmU0sk56YPozPtTyGudPp1RGoHXNjFNtoOvwOG76EdpmMpxbK10DqcygI16Lu60Q==
-  dependencies:
-    "@azure/core-auth" "^1.1.4"
-    "@azure/ms-rest-js" "^2.2.0"
-    tslib "^1.10.0"
 
 "@azure/ms-rest-js@^2.0.4", "@azure/ms-rest-js@^2.2.0":
   version "2.7.0"
@@ -492,17 +475,6 @@ axios@^1.6.2:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
-
-azure-functions-core-tools@4:
-  version "4.0.5455"
-  resolved "https://registry.npmjs.org/azure-functions-core-tools/-/azure-functions-core-tools-4.0.5455.tgz"
-  integrity sha512-jkVdWfaTYuHxZqwKiVEJZZvAvczfVzDNewYDFMdhm1yGN4je6JcYrTKw5wDuTdqc68+kqpoOgX5Qeyuf48eYww==
-  dependencies:
-    chalk "3.0.0"
-    extract-zip "^2.0.1"
-    https-proxy-agent "5.0.0"
-    progress "2.0.3"
-    rimraf "3.0.2"
 
 balanced-match@^1.0.0:
   version "1.0.2"
