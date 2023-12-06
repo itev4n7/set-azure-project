@@ -15,7 +15,7 @@ export async function uploadImage(imageUrl: string) {
         const imageBuffer = Buffer.from(imageResponse.data, 'binary');
         const blobName = `image_${uuidv4()}.jpg`;
         const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-        const uploadResponse = await blockBlobClient.upload(imageBuffer, imageBuffer.length);
+        await blockBlobClient.upload(imageBuffer, imageBuffer.length);
         return blockBlobClient
     } catch (error: any) {
         console.log('uploadImage:', error)
