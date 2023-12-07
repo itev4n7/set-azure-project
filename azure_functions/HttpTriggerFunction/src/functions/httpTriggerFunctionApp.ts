@@ -30,7 +30,6 @@ export async function httpTriggerFunctionApp(request: HttpRequest, context: Invo
     }
     const blobName = resourceById.blobName
     const credentials = new CognitiveServicesCredentials(process.env.COMPUTER_VISION_KEY!);
-    //issue with deploy here! idk why function app service is not deploying without any error due to this lib
     const clientVision = new ComputerVisionClient(credentials, process.env.COMPUTER_VISION_ENDPOINT!);
 
     const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString)

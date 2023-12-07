@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "http-trigger",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/functions/*.js",
@@ -11,6 +11,7 @@
     "start": "func start"
   },
   "dependencies": {
+    "@azure/cognitiveservices-computervision": "^8.2.0",
     "@azure/cosmos": "^4.0.0",
     "@azure/functions": "^4.0.0",
     "@azure/ms-rest-azure-js": "^2.1.0",

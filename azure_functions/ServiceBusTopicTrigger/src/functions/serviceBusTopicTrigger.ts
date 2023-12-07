@@ -1,5 +1,4 @@
 import {app, InvocationContext} from '@azure/functions';
-import {getDefaultAzureCredential} from "@azure/identity";
 import {ComputerVisionClient} from "@azure/cognitiveservices-computervision";
 import {CognitiveServicesCredentials} from "@azure/ms-rest-azure-js";
 import {BlobServiceClient} from "@azure/storage-blob";
@@ -18,8 +17,7 @@ export async function serviceBusTopicTrigger(message: any, context: InvocationCo
         }
 
         const credentials = new CognitiveServicesCredentials(process.env.COMPUTER_VISION_KEY!);
-        //issue with deploy here! idk why function app service is not deploying without any error due to this lib
-        //const clientVision = new ComputerVisionClient(credentials, process.env.COMPUTER_VISION_ENDPOINT!);
+        const clientVision = new ComputerVisionClient(credentials, process.env.COMPUTER_VISION_ENDPOINT!);
 
         const connectionString = process.env.BLOB_STORAGE_CONNECTION_STRING!;
         const containerName = 'webapiblobcontainer'
@@ -28,8 +26,8 @@ export async function serviceBusTopicTrigger(message: any, context: InvocationCo
         const blockBlobClient = containerClient.getBlockBlobClient(blobName);
         const imageBuffer = await blockBlobClient.downloadToBuffer();
 
-        //const describedImage = await clientVision.describeImageInStream(imageBuffer);
-        const labels = ['hardcoded text']//describedImage.captions!.map(caption => caption.text!);
+        const describedImage = await clientVision.describeImageInStream(imageBuffer);
+        const labels = describedImage.captions!.map(caption => caption.text!);
 
         const endpoint = process.env.COSMO_DB_ENDPOINT!;
         const key = process.env.COSMO_DB_KEY!;

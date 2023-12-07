@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "service-bus-topic-trigger",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/functions/*.js",
@@ -11,9 +11,10 @@
     "start": "func start"
   },
   "dependencies": {
+    "@azure/cognitiveservices-computervision": "^8.2.0",
     "@azure/cosmos": "^4.0.0",
     "@azure/functions": "^4.0.0",
-    "@azure/identity": "^4.0.0",
+    "@azure/ms-rest-azure-js": "^2.1.0",
     "@azure/service-bus": "^7.9.3",
     "@azure/storage-blob": "^12.17.0"
   },
