@@ -1,5 +1,5 @@
 import {ServiceBusClient} from '@azure/service-bus';
-import * as process from "process";
+import * as process from 'process';
 
 const connectionString = process.env.SERVICE_BUS_CONNECTION_STRING!;
 const topicName = 'webapitopic'

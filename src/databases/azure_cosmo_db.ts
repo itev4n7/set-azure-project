@@ -1,6 +1,6 @@
 import {CosmosClient, Resource} from '@azure/cosmos';
-import {ImageDataModel, ImageStatus} from "../models/image_data_model";
-import * as process from "process";
+import {ImageDataModel, ImageStatus} from '../models/image_data_model';
+import * as process from 'process';
 
 const endpoint = process.env.COSMO_DB_ENDPOINT!;
 const key = process.env.COSMO_DB_KEY!;
