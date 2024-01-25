@@ -8,7 +8,7 @@ import {v4 as uuidv4} from "uuid";
 import {ImageDataModel, ImageStatus} from "../models/image_data_model";
 import {sendMessage} from "../services/azure_service_bus";
 
-const app = express();
+export const app = express();
 
 app.get('/images', async (req, res) => {
     try {
