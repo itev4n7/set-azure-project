@@ -1,4 +1,5 @@
 trigger:
+- main
 - develop
 
 resources:
@@ -10,7 +11,10 @@ variables:
   imageRepository: 'set-azure-project'
   containerRegistry: 'mywebapiregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: 'latest'
+  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+    tag: 'latest'
+  ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+    tag: 'dev'
 
 stages:
 - stage: Build
