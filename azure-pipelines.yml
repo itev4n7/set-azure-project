@@ -1,25 +1,61 @@
 trigger:
+- main
 - develop
 
-pool:
-  vmImage: ubuntu-latest
+resources:
+  - repo: self
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '18.x'
-  displayName: 'install node.js'
+variables:
+  dockerRegistryServiceConnection: 'ac26bf70-aaa8-46a8-b651-e5b7c382ec69'
+  imageRepository: 'set-azure-project'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+    tag: 'latest'
+  ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+    tag: 'dev'
 
-- script: |
-    yarn install
-    yarn build
-  displayName: 'yarn install and build'
+stages:
+  - stage: buildApp
+    displayName: 'build app'
+    condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'develop'))
+    jobs:
+      - job: buildAppJob
+        displayName: 'build app'
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '18.x'
+            displayName: 'install node.js'
 
-- script: yarn lint-run
-  displayName: 'eslint code analysis'
+          - script: |
+              yarn install
+              yarn build
+            displayName: 'yarn install and build'
 
-- script: yarn test
-  displayName: 'run unit tests using jest'
+          - script: yarn lint-run
+            displayName: 'eslint code analysis'
 
+          - script: yarn test
+            displayName: 'run unit tests using jest'
 
-
+  - stage: buildImage
+    dependsOn: buildApp
+    condition: or(succeeded('buildApp'), eq(variables['Build.SourceBranchName'], 'main'))
+    displayName: 'build and push docker image'
+    jobs:
+      - job: buildImageJob
+        displayName: 'build and push docker image'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Docker@2
+            displayName: 'build and push an image to azure container registry'
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(dockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)
