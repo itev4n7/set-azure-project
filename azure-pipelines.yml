@@ -17,7 +17,6 @@ variables:
 stages:
   - stage: buildApp
     displayName: 'build app'
-    condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'develop'))
     jobs:
       - job: buildAppJob
         displayName: 'build app'
@@ -42,7 +41,6 @@ stages:
 
   - stage: buildImage
     dependsOn: buildApp
-    condition: or(succeeded('buildApp'), eq(variables['Build.SourceBranchName'], 'main'))
     displayName: 'build and push docker image'
     jobs:
       - job: buildImageJob

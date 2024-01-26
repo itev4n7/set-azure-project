@@ -12,6 +12,7 @@
     "build": "tsc",
     "test": "jest --verbose ./src/tests",
     "pw-test": "yarn playwright test"
+  },
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
     "@azure/functions": "^4.1.0",
