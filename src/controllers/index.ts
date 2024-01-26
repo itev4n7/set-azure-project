@@ -1,14 +1,14 @@
 import * as dotenv from 'dotenv';
 
 dotenv.config();
-import express from "express";
-import {uploadImage} from "../services/azure_blob_storage";
-import {addItem, deleteItemById, getAllItems, getItemById} from "../databases/azure_cosmo_db";
-import {v4 as uuidv4} from "uuid";
-import {ImageDataModel, ImageStatus} from "../models/image_data_model";
-import {sendMessage} from "../services/azure_service_bus";
+import express from 'express';
+import {uploadImage} from '../services/azure_blob_storage';
+import {addItem, deleteItemById, getAllItems, getItemById} from '../databases/azure_cosmo_db';
+import {v4 as uuidv4} from 'uuid';
+import {ImageDataModel, ImageStatus} from '../models/image_data_model';
+import {sendMessage} from '../services/azure_service_bus';
 
-const app = express();
+export const app = express();
 
 app.get('/images', async (req, res) => {
     try {
@@ -84,10 +84,9 @@ app.post('/image', async (req, res) => {
         }
         await sendMessage(body)
         res.send({
-                status: 200,
-                body: `Image uploaded successfully: id=${imageMetadataItem.id}, blobName=${imageMetadataItem.blobName}, blobUrl=${imageMetadataItem.blobUrl}`
-            }
-        )
+            status: 200,
+            body: `Image uploaded successfully: id=${imageMetadataItem.id}, blobName=${imageMetadataItem.blobName}, blobUrl=${imageMetadataItem.blobUrl}`
+        })
     } catch (error: any) {
         res.send({
             status: 500,

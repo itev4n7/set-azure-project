@@ -1,6 +1,6 @@
 import {BlobServiceClient} from '@azure/storage-blob';
-import * as process from "process";
-import axios from "axios";
+import * as process from 'process';
+import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
 
 const connectionString = process.env.BLOB_STORAGE_CONNECTION_STRING!;
