@@ -1,16 +1,34 @@
-//import {app} from '../controllers'
-//TBD need to investigate frameworks for mocking azure services
+import axios from 'axios';
+import {uploadImage} from '../services/azure_blob_storage';
 
-describe('unit tests', function () {
-    it('GET /images 200', function (done) {
-        const res = {statusCode: 200}
-        expect(res.statusCode).toEqual(200)
-        done()
+process.env.BLOB_STORAGE_CONNECTION_STRING = 'Dummy_Connection_String';
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+jest.mock('axios');
+
+const mockBlobServiceClient = {
+    getContainerClient: jest.fn().mockReturnValue({
+        getBlockBlobClient: jest.fn().mockReturnValue({
+            upload: jest.fn(),
+        }),
+    }),
+};
+jest.mock('@azure/storage-blob', () => ({
+    BlobServiceClient: {
+        fromConnectionString: jest.fn(() => mockBlobServiceClient),
+    },
+}));
+
+describe('Image handling functionality', () => {
+    beforeEach(() => {
+        mockedAxios.get.mockResolvedValue({data: 'arraybuffer'});
+        jest.clearAllMocks();
     });
 
-    it('GET /images?id 400', function (done) {
-        const res = {statusCode: 400}
-        expect(res.statusCode).toEqual(400)
-        done()
+    it('should upload image', async () => {
+        const imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1025px-Cat03.jpg';
+        await uploadImage(imageUrl);
+        expect(mockBlobServiceClient.getContainerClient).toHaveBeenCalledTimes(1);
+        expect(mockBlobServiceClient.getContainerClient().getBlockBlobClient).toHaveBeenCalledTimes(1);
+        expect(mockBlobServiceClient.getContainerClient().getBlockBlobClient().upload).toHaveBeenCalledTimes(1);
     });
 });

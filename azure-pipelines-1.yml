@@ -3,8 +3,7 @@ name: "Playwright API Tests ($(Build.BuildId))"
 variables:
   CI: true
 
-trigger:
-- develop
+trigger: none
 
 jobs:
   - job: testRun

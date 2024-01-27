@@ -3,14 +3,21 @@ import * as process from 'process';
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
 
-const connectionString = process.env.BLOB_STORAGE_CONNECTION_STRING!;
 const containerName = 'webapiblobcontainer'
 
-const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString)
+let blobServiceClient: BlobServiceClient;
+
+export function getBlobServiceClient() {
+    const connectionString = process.env.BLOB_STORAGE_CONNECTION_STRING!;
+    if (!blobServiceClient) {
+        blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
+    }
+    return blobServiceClient;
+}
 
 export async function uploadImage(imageUrl: string) {
     try {
-        const containerClient = blobServiceClient.getContainerClient(containerName);
+        const containerClient = getBlobServiceClient().getContainerClient(containerName);
         const imageResponse = await axios.get(imageUrl, {responseType: 'arraybuffer'});
         const imageBuffer = Buffer.from(imageResponse.data, 'binary');
         const blobName = `image_${uuidv4()}.jpg`;
@@ -24,7 +31,7 @@ export async function uploadImage(imageUrl: string) {
 }
 
 export async function downloadImage(blobName: string) {
-    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const containerClient = getBlobServiceClient().getContainerClient(containerName);
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
     return await blockBlobClient.downloadToBuffer();
 }

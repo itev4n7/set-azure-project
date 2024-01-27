@@ -37,7 +37,7 @@ stages:
             displayName: 'eslint code analysis'
 
           - script: yarn test
-            displayName: 'run unit tests using jest'
+            displayName: 'run mock unit test using jest'
 
   - stage: buildImage
     dependsOn: buildApp
