@@ -1,5 +1,5 @@
 //import {app} from '../controllers'
-//TBD need to configure azure services for local use
+//TBD need to investigate frameworks for mocking azure services
 
 describe('unit tests', function () {
     it('GET /images 200', function (done) {
