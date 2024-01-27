@@ -1,0 +1,46 @@
+name: "Playwright API Tests ($(Build.BuildId))"
+
+variables:
+  CI: true
+
+trigger:
+- develop
+
+jobs:
+  - job: testRun
+    timeoutInMinutes: 5
+    pool:
+      vmImage: "ubuntu-latest"
+
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "18.x"
+        displayName: "install node.js"
+
+      - script: |
+          yarn install --frozen-lockfile
+        displayName: "install dependencies"
+
+      - script: |
+          yarn playwright install chromium
+        displayName: "install playwright browsers"
+
+      - script: |
+          yarn pw-test
+        displayName: "run api tests"
+
+      - task: PublishTestResults@2
+        displayName: "publish test results"
+        inputs:
+          searchFolder: "test-results"
+          testResultsFormat: "JUnit"
+          testResultsFiles: "junit-results.xml"
+          mergeTestResults: true
+          failTaskOnFailedTests: true
+          testRunTitle: "api tests"
+        condition: succeededOrFailed()
+
+      - publish: $(System.DefaultWorkingDirectory)/test-html-report
+        artifact: test-html-report
+        condition: succeededOrFailed()
